@@ -14,7 +14,6 @@ export class AssertionError extends Error {
 }
 
 export function assertType<T extends TSchema>(schema: T, value: unknown, message?: string): asserts value is Static<T> {
-	if (!schema.$id) throw new Error(`Please provide an '$id' to your typebox schemas`);
 	Value.Clean(schema, value);
 	Value.Default(schema, value);
 
