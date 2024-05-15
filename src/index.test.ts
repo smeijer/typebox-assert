@@ -18,7 +18,7 @@ const User = Type.Object(
 await test('throws AssertionError when props are missing', () => {
 	assert.throws(() => assertType(User, { name: 'stephan' }), {
 		name: 'AssertionError',
-		message: 'Invalid data provided for type: User',
+		message: 'Invalid data provided for type: User.',
 	});
 });
 

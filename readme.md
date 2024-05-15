@@ -18,18 +18,18 @@ Note that `assertType` does not just assert, it also:
 
 The operations are done on the provided object in a mutable manner.
 
-To enforce best practices, schemas used by `assertType` require an `$id`.
+For best practices, we recommend adding an $id to schemas used by `assertType`.
 
 ```ts
-import { Type } from "@sinclair/typebox";
-import { assertType } from "typebox-assert";
+import { Type } from '@sinclair/typebox';
+import { assertType } from 'typebox-assert';
 
 const Person = Type.Object(
 	{
 		name: Type.String(),
 		email: Type.String(),
 	},
-	{ $id: "Person" },
+	{ $id: 'Person' },
 );
 
 function createUser(data: unknown) {

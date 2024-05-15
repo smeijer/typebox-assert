@@ -26,8 +26,9 @@ export function assertType<T extends TSchema>(schema: T, value: unknown, message
 	}
 
 	const errors = [...Value.Errors(schema, value)];
-	message = message || `Invalid data provided for type: ${schema.$id}`;
-	throw new AssertionError(message, errors);
+	if (message) throw new AssertionError(message, errors);
+	if (schema.$id) throw new AssertionError(`Invalid data provided for type: ${schema.$id}.`, errors);
+	throw new AssertionError(`Invalid data provided, did not match expected schema.`, errors);
 }
 
 export const assert = assertType;
