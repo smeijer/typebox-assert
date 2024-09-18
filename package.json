@@ -1,6 +1,6 @@
 {
 	"name": "typebox-assert",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"description": "utility function to assert and narrow a type using typebox",
 	"license": "MIT",
 	"repository": {
@@ -11,20 +11,26 @@
 	"author": "Stephan Meijer <stephan.meijer@gmail.com> (meijer.ws)",
 	"bugs": "https://github.com/smeijer/typebox-assert/issues",
 	"homepage": "https://github.com/smeijer/typebox-assert#readme",
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"type": "module",
 	"engines": {
 		"node": ">=18"
 	},
+	"tshy": {
+		"exclude": [
+			"src/**.test.ts"
+		],
+		"exports": {
+			"./package.json": "./package.json",
+			".": "./src/index.ts"
+		}
+	},
 	"scripts": {
-		"dev": "pkgroll --watch",
-		"build": "pkgroll",
+		"dev": "tshy --watch",
+		"build": "tshy && attw -P",
 		"prepare": "npx simple-git-hooks",
 		"lint": "eslint --fix .",
 		"type-check": "tsc --noEmit",
-		"test": "globstar -- node --import tsx --test \"src/**/*.test.ts\"",
-		"prepack": "npm run build"
+		"test": "globstar -- node --import tsx --test \"src/**/*.test.ts\""
 	},
 	"simple-git-hooks": {
 		"pre-commit": "pretty-quick --staged"
@@ -40,6 +46,7 @@
 		"narrow"
 	],
 	"devDependencies": {
+		"@arethetypeswrong/cli": "^0.16.4",
 		"@remix-run/server-runtime": "^2.9.1",
 		"@sinclair/typebox": "^0.32.29",
 		"@smeijer/eslint-config": "^1.5.0",
@@ -48,13 +55,29 @@
 		"borp": "^0.13.0",
 		"eslint-plugin-best-practices": "^0.0.1",
 		"globstar": "^1.0.0",
-		"pkgroll": "^2.0.2",
 		"pretty-quick": "^4.0.0",
 		"simple-git-hooks": "^2.11.1",
+		"tshy": "^3.0.2",
 		"tsx": "^4.9.3",
 		"typescript": "^5.4.5"
 	},
 	"peerDependencies": {
 		"@sinclair/typebox": "^0.32.0"
-	}
+	},
+	"exports": {
+		"./package.json": "./package.json",
+		".": {
+			"import": {
+				"types": "./dist/esm/index.d.ts",
+				"default": "./dist/esm/index.js"
+			},
+			"require": {
+				"types": "./dist/commonjs/index.d.ts",
+				"default": "./dist/commonjs/index.js"
+			}
+		}
+	},
+	"module": "./dist/esm/index.js",
+	"main": "./dist/commonjs/index.js",
+	"types": "./dist/commonjs/index.d.ts"
 }
